@@ -7,14 +7,14 @@ require('dotenv').config(); // Corrected invocation
 const api_key = process.env.STREAM_API_KEY;
 const api_secret = process.env.STREAM_API_SECRET;
 const api_id = process.env.STREAM_API_ID;
-
+console.log(api_secret)
 const login = async (req, res) => {
   try {
     const { username, password } = req.body;
     const serverClient = connect(api_key, api_secret, api_id);
     const client = StreamChat.getInstance(api_key, api_secret);
     const { users } = await client.queryUsers({ name: username });
-
+    console.log("here")
     if (!users.length) {
       return res.status(400).json({ message: 'User not found' });
     }
@@ -39,8 +39,11 @@ const signup = async (req, res) => {
     const userId = crypto.randomBytes(16).toString('hex');
     const serverClient = connect(api_key, api_secret, api_id);
     const hashedPassword = await bcrypt.hash(password, 10);
+    console.log("here");
+    console.log(userId);
     const token = serverClient.createUserToken(userId);
-
+    console.log('token', token)
+   
     res.status(200).json({ token, fullName, username, userId, hashedPassword, phoneNumber });
   } catch (error) {
     console.error(error);

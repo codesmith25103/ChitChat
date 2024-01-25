@@ -14,7 +14,10 @@ app.get('/', (req, res) => {
 });
 
 app.use('/auth', authRoutes);
-
+const api_key = process.env.STREAM_API_KEY;
+const api_secret = process.env.STREAM_API_SECRET;
+const api_id = process.env.STREAM_API_ID;
+console.log(api_secret)
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
